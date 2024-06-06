@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
@@ -84,8 +85,9 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
+        
         $project = Project::findOrFail($id);
-     
+        
         $data = [
             'project' => $project,
         ];
