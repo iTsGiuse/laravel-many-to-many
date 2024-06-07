@@ -27,9 +27,9 @@
                         <div class="card-body">
                             <h5 class="card-title my-2">{{$project->name}}</h5>
                             <p class="card-text my-2">TIPO: {{$project->type ? $project->type->name : 'none'}}</p>
-                            <p class="card-text my-2">Tecnologia utilizza: @if(count($project->technology) > 0)
-                                                                                    @foreach($project->technology as $technologies)
-                                                                                        {{ $technologies->name }}
+                            <p class="card-text my-2">Tecnologia utilizza: @if(count($project->technologies) > 0)
+                                                                                    @foreach($project->technologies as $technology)
+                                                                                        {{ $technology->name }}
                                                                                     @endforeach
                                                                              @else
                                                                                     Nessuna tecnologia associata.

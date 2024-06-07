@@ -41,6 +41,18 @@
                     <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
+            <div class="row mb-4">
+                <span class="mb-2">Scegli la tecnlogia</span>
+                @foreach ($technologies as $technology)
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" @checked(in_array($technology->id, old('technologies', []))) value="{{ $technology->id }}" id="technology-{{ $technology->id }}" name="technologies[]">
+                    <label class="form-check-label" for="technology-{{ $technology->id }}">{{$technology->name}}</label>
+                </div>
+                @endforeach
+                @error('technologies')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="row mb-3">
                 <label for="summary" class="form-label">Inserisci la descrizione</label>
                 <textarea class="form-control" id="summary" name="summary" rows="3">{{ old('summary') }}</textarea>

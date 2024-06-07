@@ -40,9 +40,11 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
+        $technologies = Technology::all();
 
         $data= [
-            'types'=>$types
+            'types'=>$types,
+            'technologies'=>$technologies
         ];
 
         return view('admin.projects.create', $data);
@@ -73,6 +75,10 @@ class ProjectController extends Controller
         $newProject->slug = Str::slug($formData['name'], '-');
         $newProject-> fill($formData);
         $newProject-> save();
+
+        if($request->has('technologies')) {
+            $newProject->technologies()->attach($formData['technologies']);
+        }
 
         return redirect()->route('admin.projects.show', ['project' => $newProject->id]);
     }
@@ -173,7 +179,8 @@ class ProjectController extends Controller
                 'summary' => 'nullable|min:50|max:5000',
                 'client_name' => 'required|min:5|max:50',
                 'image' =>'required',
-                'type_id'=>'required'
+                'type_id'=>'required',
+                'technologies' => 'required|exists:technologies,id',
             ],
             [
                 'name.required' => 'Il titolo è obbligatorio',
@@ -186,7 +193,9 @@ class ProjectController extends Controller
                 'client_name.min' => 'Il nome del cliente deve essere composto da almeno cinque caratteri',
                 'client_name.max' => 'Il nome del cliente non può avere più di cinquanta caratteri',
                 'image.required'=>'L\'immagine è obbligatoria',
-                'type_id.required'=>'Il tipo è obbligatorio'
+                'type_id.required'=>'Il tipo è obbligatorio',
+                'technologies.required'=>'Il tipo di tecnologia da usare/usata è obbligatoria',
+                'technologies.exists' => 'La tecnologia selezionata non è valida'
             ]
         )->validate();
         
